@@ -28,11 +28,5 @@ def cardapio():
 def sign_in():
     return render_template("sign_in.html")
 
-@app.route("/sign_up")
-def sign_up():
-    return render_template("sign_up.html")
-
-
-
 
 app.run()
