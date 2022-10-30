@@ -1,12 +1,22 @@
+
+#######################################################
+                         # IMPORT DE BIBLIOTECAS E FUNÇÕES
 from flask import Flask, request, send_file, render_template
 from flask_qrcode import QRcode
-import qrcode
+import qrcode, time, datetime
 
 
-from db import user      #importa dados do usuario
+
+###################################################
+from db import user      # Importa dados do usuario
 nome=user.nome, cpf=user.cpf, dre=user.dre
 
-class QRCodee:           #classe geradora do QRcode
+
+
+
+
+
+class QRCodeOBJ:           # Classe geradora do QRcode
     def __init__(self,cpf,nome,dre):
         self.cpf = cpf
         self.nome = nome
@@ -19,5 +29,25 @@ class QRCodee:           #classe geradora do QRcode
         img.save("bandejao copy/static/QRc.png")
 
 
-p1 = QRCodee(144934888400,"Janot_de_Carvalho",122072511)
+p1 = QRCodeOBJ(144934888400,"Janot_de_Carvalho",122072511)
 p1.qrmake()
+
+
+class Fila:
+    def __init__(self):
+
+
+        pass
+
+    def espera(h, m):             # Contador que simula tempo de espera da fila
+        segundos = h * 60 + m     # OBS: MINUTOS REAIS REPRESENTAM HORAS
+ 
+        while segundos > 0:
+ 
+            # Timer representa tempo faltando
+            timer = datetime.timedelta(seconds = segundos)
+        
+            time.sleep(1)
+            segundos -= 1
+ 
+    print("cabou kk")
