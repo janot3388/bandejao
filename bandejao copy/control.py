@@ -7,9 +7,9 @@ import qrcode, time, datetime
 
 
 
-###################################################
-from db import user      # Importa dados do usuario
-nome=user.nome, cpf=user.cpf, dre=user.dre
+################################################### COMENTADO PQ N TO USANDO A DB PRA TESTAR
+#from db import user      # Importa dados do usuario
+#nome=user.nome, cpf=user.cpf, dre=user.dre
 
 
 
@@ -39,7 +39,7 @@ class Fila:
 
         pass
 
-    def espera(h, m):             # Contador que simula tempo de espera da fila
+    def espera(self,h, m):        # Contador que simula tempo de espera da fila
         segundos = h * 60 + m     # OBS: MINUTOS REAIS REPRESENTAM HORAS
  
         while segundos > 0:
@@ -50,4 +50,8 @@ class Fila:
             time.sleep(1)
             segundos -= 1
  
-    print("cabou kk")
+        print("cabou kk")
+
+##### TESTE DA ESPERA
+# fila1 = Fila()
+# fila1.espera(0,10)
