@@ -40,11 +40,11 @@ class Fila:
         pass
 
     def espera(self,h, m):        # Contador que simula tempo de espera da fila
-        segundos = h * 60 + m     # OBS: MINUTOS REAIS REPRESENTAM HORAS
+        segundos = h * 60 + m     # OBS: UMA HORA É REPRESENTADA POR UM SEGUNDO
  
         while segundos > 0:
  
-            # Timer representa tempo faltando
+            # Timer representa tempo faltando, para exportar pro processamento
             timer = datetime.timedelta(seconds = segundos)
         
             time.sleep(1)
