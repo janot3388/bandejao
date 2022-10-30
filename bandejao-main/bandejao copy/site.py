@@ -143,17 +143,16 @@ def entar_fila():
     return redirect("/aguardando")
 
 
-
+#renderiza a aba de espera antes da função
 @app.route("/aguardando")
-
 def switch():
     
-
     from db import user
     log=s_in(user.dre, user.cpf)
 
     return render_template("aguardando.html",log=log)
 
+#inicia a função de espera
 @app.route("/aguardo")
 def aguardar(): 
 
@@ -165,7 +164,7 @@ def aguardar():
 
     return redirect("/qrcode")
 
-
+#renderiza a aba de geração do QRcode + função que gera o mesmo
 @app.route("/qrcode")
 def gerar_qr():
 
