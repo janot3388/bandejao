@@ -1,0 +1,16 @@
+
+{% extends "home.html" %}
+
+{% block content %}            
+<script>
+    function navigate() {
+      window.location.href = 'qrcode';  // redireciona para qrcode assim que fetch acabar
+    }
+    fetch('aguardo').then(navigate); // carrega aguardo antes de redirecionar
+  </script>
+    <div id="page">
+        <div>Aguarde o decorrer da fila</div>
+        
+        
+    </div>
+{% endblock %}

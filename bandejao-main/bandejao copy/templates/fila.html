@@ -4,15 +4,15 @@
 {% block content %}            
     <div id="page">
         <div>Status da fila do Bandejão</div>
-        <li>Tempo esperado na fila do Ct:{{ ct }}</li>
-        <li>Tempo esperado na fila do Central:{{ central }}</li>
-        <li>Tempo esperado na fila de Letras:{{ letras }}</li>
+        <li>Tempo esperado na fila do Ct:{{ ct }}min</li>
+        <li>Tempo esperado na fila do Central:{{ central }}min</li>
+        <li>Tempo esperado na fila de Letras:{{ letras }}min</li>
     </div>
     {% if log %}
     <form method="POST" action="/fila">
-        <input type="radio" name="place" value="ct"><label>CT</label>
-        <input type="radio" name="place" value="central"><label>Central</label>
-        <input type="radio" name="place" value="letras"><label>Letras</label>
+        <input type="radio" name="place" value="55"><label>CT</label>
+        <input type="radio" name="place" value="75"><label>Central</label>
+        <input type="radio" name="place" value="45"><label>Letras</label>
         <button>entrar na fila</button>
     </form>
     {% endif %}

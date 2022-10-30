@@ -36,8 +36,8 @@ class Fila:                       # Classe geradora da fila de espera
         pass
 
 
-    def espera(self,h, m):        # Contador que simula tempo de espera da fila
-        segundos = h * 60 + m     # OBS: UMA HORA É REPRESENTADA POR UM SEGUNDO
+    def esperar(self,m):        # Contador que simula tempo de espera da fila
+        segundos = m     # OBS: UMA HORA É REPRESENTADA POR UM SEGUNDO
  
         while segundos > 0:
             # Timer representa tempo faltando, para exportar pro processamento
@@ -46,7 +46,7 @@ class Fila:                       # Classe geradora da fila de espera
             # Espera um segundo enquanto conta um a menos na variável
             time.sleep(1)
             segundos -= 1
-            
+            print(segundos)
             if segundos == 15:
                 
                 filaquase = True
@@ -56,5 +56,5 @@ class Fila:                       # Classe geradora da fila de espera
         print("A fila acabou")
 
 ##### TESTE DA ESPERA
-fila1 = Fila()
-fila1.espera(0,20)
+#fila1 = Fila()
+#fila1.esperar(20)

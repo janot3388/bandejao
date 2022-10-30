@@ -33,7 +33,7 @@ def fila():
     log=s_in(user.dre, user.cpf)
 
     #carrega o template de fila
-    return render_template("fila.html", ct="55min", central="1h 15min", letras="45min", log=log)
+    return render_template("fila.html", ct="55", central="75", letras="45", log=log)
 
 #visualizar o cardapio do dia
 @app.route("/cardapio")
@@ -44,6 +44,7 @@ def cardapio():
 
     #carrega o template de cardapio
     return render_template("cardapio.html", salad="alface e cenora", carne="churrasco misto", vegan="quiche", sobremesa="pera", log=log)
+
 
         #OPCOES DA BARRA DE TOPO
 
@@ -131,10 +132,58 @@ def sign_up_post():
 #processa a escolha do bandejao a se entrar na fila
 @app.route("/fila", methods=['POST'])
 def entar_fila():
+    from db import user
+    log=s_in(user.dre, user.cpf)
+    global lugar
+    
+    lugar = (request.form.get('place'))
+    int(lugar)
 
-    #lugar = request.form.get('place')
     #print (lugar)
-    return redirect(url_for('home'))
+    return redirect("/aguardando")
+
+
+
+@app.route("/aguardando")
+
+def switch():
+    
+
+    from db import user
+    log=s_in(user.dre, user.cpf)
+
+    return render_template("aguardando.html",log=log)
+
+@app.route("/aguardo")
+def aguardar(): 
+
+    from control import Fila
+    wait = Fila()
+    wait.esperar(int(lugar))
+    print("$$$$$$$$$$$$")
+
+
+    return redirect("/qrcode")
+
+
+@app.route("/qrcode")
+def gerar_qr():
+
+    from control import QRCodeOBJ
+    from db import user
+    log=s_in(user.dre, user.cpf)
+    
+    codigo = QRCodeOBJ(user.cpf,user.nome,user.dre)
+    codigo.qrmake()
+
+    return render_template("qrcode.html", log=log)
+
+
+
+
+
+
+
 
 #rodar as rotas no site
 app.run()
