@@ -28,9 +28,9 @@ class QRCodeOBJ:           # Classe geradora do QRcode
         type(img)
         img.save("bandejao copy/static/QRc.png")
 
-
-p1 = QRCodeOBJ(144934888400,"Janot_de_Carvalho",122072511)
-p1.qrmake()
+###TESTE DO OBJ
+# p1 = QRCodeOBJ(144934888400,"Janot_de_Carvalho",122072511)
+# p1.qrmake()
 
 
 class Fila:
