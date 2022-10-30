@@ -9,22 +9,27 @@
 </head>
 
 <body>
-    <h1 id="top">
+    <div id="top">
         <header id="Bandejão">Bandejão</header>
-        <aside><a href="{{url_for('sign_up')}}" id="sign"> Cadastre-se </a></aside>
-        <aside><a href="{{url_for('sign_in')}}" id="sign"> Login </a></aside>
-    </h1>
-    <section id="section">
+        {% if log %}
+        <div><a href="{{url_for('logout')}}" id="sign"> sair </a></div>
+        <div><a href="{{url_for('profile')}}" id="sign"> perfil </a></div>
+        {% else %}
+        <div><a href="{{url_for('sign_up')}}" id="sign"> Cadastre-se </a></div>
+        <div><a href="{{url_for('sign_in')}}" id="sign"> Login </a></div>
+        {% endif %}
+    </div>
+    <div id="section">
         <ul id="nav">
             <li id="icon"><a href="{{url_for('home')}}"> home </a></li>
             <li id="icon"><a href="{{url_for('fila')}}"> fila </a></li>
             <li id="icon"><a href="{{url_for('cardapio')}}"> cardapio </a></li>
         </ul>
-        <article id="page">
+        <div id="page">
             {% block content %}
             {% endblock %}
-        </article>
-    </section>
+        </div>
+    </div>
 </body>
 
 </html>

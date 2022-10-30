@@ -2,13 +2,13 @@
 {% extends "home.html" %}
 
 {% block content %}            
-    <article id="page">
-        <h1>Cardápio de Hoje</h1>
-        <article>
+    <div id="page">
+        <div>Cardápio de Hoje</div>
+        <div>
             <li>Salada:{{ salad }}</li>
             <li>Proteína:{{ carne }}</li>
             <li>Prato Vegano:{{ vegan }}</li>
             <li>Sobremesa:{{ sobremesa }}</li>
-        </article>
-    </article>
+        </div>
+    </div>
 {% endblock %}
