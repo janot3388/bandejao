@@ -1,0 +1,16 @@
+
+{% extends "home2.html" %}
+
+{% block content %}            
+    <article id="page">
+        <h1>Status da fila do Bandejão</h1>
+        <article>Tempo esperado na fila do Ct:{{ ct }}</article>
+        <article>Tempo esperado na fila do Central:{{ central }}</article>
+        <article>Tempo esperado na fila de Letras:{{ letras }}</article>
+    </article>
+    <form action="/entrar_fila" method="POST">
+        <input type="radio" name="place" value="ct"><label>CT</label><input type="radio" name="place" value="central"><label>Central</label><input type="radio" name="place" value="letras"><label>Letras</label>
+        <button>entrar na fila</button>
+    </form>
+    
+{% endblock %}
