@@ -7,9 +7,9 @@ import qrcode, time, datetime
 
 
 
-########################## COMENTAR CASO TESTAR DIRETO SEM USAR DB !!
-from db import user      # Importa dados do usuario
-nome=user.nome, cpf=user.cpf, dre=user.dre
+########################## COMENTAR CASO TESTAR QRCODE DIRETO SEM USAR DB !!
+#from db import user      # Importa dados do usuario
+#nome=user.nome, cpf=user.cpf, dre=user.dre
 
 
 
@@ -26,9 +26,9 @@ class QRCodeOBJ:                     # Classe geradora do QRcode
         img.save("bandejao-main/bandejao copy/static/QRc.png")
 
 
-###TESTE DO OBJ
-p1 = QRCodeOBJ(cpf,nome,dre)
-p1.qrmake()
+###TESTE DE OBJ QRCODE
+#p1 = QRCodeOBJ(cpf,nome,dre)
+#p1.qrmake()
 
 
 class Fila:                       # Classe geradora da fila de espera
@@ -46,9 +46,15 @@ class Fila:                       # Classe geradora da fila de espera
             # Espera um segundo enquanto conta um a menos na variável
             time.sleep(1)
             segundos -= 1
- 
-        print("cabou kk")
+            
+            if segundos == 15:
+                
+                filaquase = True
+                print("A Fila esta quase acabando")
+
+        filafim = True
+        print("A fila acabou")
 
 ##### TESTE DA ESPERA
-# fila1 = Fila()
-# fila1.espera(0,10)
+fila1 = Fila()
+fila1.espera(0,20)
