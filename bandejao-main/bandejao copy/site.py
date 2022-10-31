@@ -178,6 +178,27 @@ def gerar_qr():
     return render_template("qrcode.html", log=log)
 
 
+################################
+
+@app.route("/lerQR")
+def leitura():
+
+    from db import user
+    from flask import request
+    log=s_in(user.dre, user.cpf)
+    
+
+    cpfL= request.args.get('cpf')
+    print(cpfL)
+    dreL= request.args.get('dre')
+    print(dreL)
+    nomeL = request.args.get('nome')
+    print(nomeL)
+    keyL = request.args.get('k')[0:-1]
+    print(keyL)
+
+
+    return render_template("lerQR.html", log=log)
 
 
 

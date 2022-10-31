@@ -15,10 +15,12 @@ import qrcode, time, datetime
 
 class QRCodeOBJ:                     # Classe geradora do QRcode
     def __init__(self,cpf,nome,dre):
+        import string, random
         self.cpf = cpf
         self.nome = nome
         self.dre = dre
-        self.qrdata = ("http://127.0.0.1:5000/lerQR/" + str(self.cpf) + "+" + str(self.dre) + "+" + self.nome + "/" )
+        self.chave = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(9))
+        self.qrdata = ("http://127.0.0.1:5000/lerQR?cpf=" + str(self.cpf) + "&dre=" + str(self.dre) + "&nome=" + self.nome + "&k=" + self.chave +"/" )
 
     def qrmake(self):
         img = qrcode.make(self.qrdata)
