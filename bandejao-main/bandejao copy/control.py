@@ -60,3 +60,4 @@ class Fila:                       # Classe geradora da fila de espera
 ##### TESTE DA ESPERA
 #fila1 = Fila()
 #fila1.esperar(20)
+

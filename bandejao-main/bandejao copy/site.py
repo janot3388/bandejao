@@ -172,8 +172,14 @@ def gerar_qr():
     from db import user
     log=s_in(user.dre, user.cpf)
     
-    codigo = QRCodeOBJ(user.cpf,user.nome,user.dre)
-    codigo.qrmake()
+    # GERA QR
+    link = QRCodeOBJ(user.cpf,user.nome,user.dre)
+    link.qrmake()
+
+    #QUANDO QR CODE É GERADO, VAR CHAVE DO USUARIO É ATUALIZADA PARA AUTH FUTURA NA ENTRADA DO BANDEJAO
+    user.chave = QRCodeOBJ.chave 
+
+
 
     return render_template("qrcode.html", log=log)
 
@@ -198,7 +204,20 @@ def leitura():
     print(keyL)
 
 
-    return render_template("lerQR.html", log=log)
+
+# DAQUI PRA BAIXO É SÓ PUTARIA QUE TALVEZ SIRVA DEPOIS
+    if keyL == user.chave:
+        
+        from db import alocar
+
+        alocar(cpfL,nomeL,dreL)
+
+        user.chave = 'expirado'
+
+
+        return render_template("lerQR.html", log=log, scpf=cpfL, sdre=dreL, snome=nomeL, skey=keyL)
+    
+    request.form.get
 
 
 

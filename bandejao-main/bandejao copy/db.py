@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 
 
@@ -8,6 +9,7 @@ class User():
         self.nome=nome
         self.dre=dre
         self.cpf=cpf
+        self.chave = "nada"      
 
     #usado tanto para logar o usuario quanto para desloga-lo
     def logar(self, a, b, c):
@@ -24,9 +26,15 @@ user = User("","","")
 db = sqlite3.connect('db.sqlite') 
 c = db.cursor()
 
+
+######### CRIEI TABLE QUE LISTA ALUNOS QUE ENTRARAM NO BANDEJÃO + HORARIO EM QUE ENTRARAM (DELETA SE DER MERDA)
 c.execute('''
           CREATE TABLE IF NOT EXISTS alunos
           ([nome] STRING, [dre] STRING PRIMARY KEY, [cpf] STRING UNIQUE);
+
+          CREATE TABLE IF NOT EXISTS alocados
+          ([nome] STRING, [dre] STRING PRIMARY KEY, [cpf] STRING UNIQUE, [tempo] TEXT))
+
           ''')
 
 db.commit()
@@ -85,3 +93,13 @@ def s_in(dre, cpf):
             
             return True
     return False
+
+
+############## FUNÇÃO QUE INSERE ALUNOS QUE ENTRARAM NO BANDEJÃO NO X DIA E HORA, NO DB alocados
+def alocar(cpf,nome,dre):
+    db = sqlite3.connect('db.sqlite') 
+    c = db.cursor()
+
+    c.execute("INSERT INTO alocados VALUES ('"+nome+"','"+dre+"','"+cpf+"','"+datetime('now','localtime')+"')")
+
+    db.commit()
