@@ -61,7 +61,7 @@ def home():
 
     #todas as rotas de renderização possuem essa verificacao caso alguem esteja logado
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
 
 
     #carrega o template de home
@@ -74,7 +74,7 @@ def home():
 def fila():
 
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
 
     #carrega o template de fila
     return render_template("fila.html", ct="55", central="75", letras="45", log=log)
@@ -86,7 +86,7 @@ def fila():
 def cardapio():
 
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
 
     #carrega o template de cardapio
     return render_template("cardapio.html", salad="alface e cenora", carne="churrasco misto", vegan="quiche", sobremesa="pera", log=log)
@@ -99,7 +99,7 @@ def cardapio():
 def sign_in():
 
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
 
     #carrega o template de sign in
     return render_template("sign_in.html", log=log)
@@ -109,7 +109,7 @@ def sign_in():
 def sign_up():
 
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
 
     #carrega o template de sign up
     return render_template("sign_up.html", log=log)
@@ -119,10 +119,10 @@ def sign_up():
 def profile():
 
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
 
     #carrega o template do perfil
-    return render_template("profile.html", nome=user.nome, cpf=user.cpf, dre=user.dre, log=log)
+    return render_template("profile.html", nome=user.nome, senha=user.senha, dre=user.dre, log=log)
 
 #deslogar
 @app.route("/logout")
@@ -143,10 +143,10 @@ def sign_in_post():
     
     #a utilização do comand int() será explicada no banco de dados
     dre = int (request.form.get('DRE'))
-    cpf = int (request.form.get('CPF'))
+    senha = int (request.form.get('senha'))
 
     #a função s_in retorna True caso os dados tenham correspondencia no banco de dados
-    if s_in(dre, cpf): 
+    if s_in(dre, senha): 
         
         return redirect(url_for('home'))
 
@@ -162,10 +162,10 @@ def sign_up_post():
     
     nome = request.form['nome']
     dre = request.form['DRE']
-    cpf = request.form['CPF']
+    senha = request.form['senha']
 
     #a função s_up retorna True caso os dados já não tenham uma instância no banco de dados
-    if s_up(nome, dre, cpf):
+    if s_up(nome, dre, senha):
 
         return redirect(url_for('home'))
 
@@ -179,7 +179,7 @@ def sign_up_post():
 @app.route("/fila", methods=['POST'])
 def entar_fila():
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
     global lugar
     
     lugar = (request.form.get('place'))
@@ -193,7 +193,7 @@ def entar_fila():
 def switch():
     
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
 
     return render_template("aguardando.html",log=log)
 
@@ -245,10 +245,10 @@ def gerar_qr():
 
     from control import QRCodeOBJ
     from db import user
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
     
     # GERA QR
-    link = QRCodeOBJ(user.cpf,user.nome,user.dre)
+    link = QRCodeOBJ(user.senha,user.nome,user.dre)
     link.qrmake()
 
     #QUANDO QR CODE É GERADO, VAR CHAVE DO USUARIO É ATUALIZADA PARA AUTH FUTURA NA ENTRADA DO BANDEJAO
@@ -267,11 +267,11 @@ def leitura():
 
     from db import user
     from flask import request
-    log=s_in(user.dre, user.cpf)
+    log=s_in(user.dre, user.senha)
     
 #RECEBE VALORES DOS PARAMETROS DO LINK PERTENCENTE AO QRCODE
-    cpfL= request.args.get('cpf')
-    print(cpfL)
+    senhal= request.args.get('senha')
+    print(senhal)
     dreL= request.args.get('dre')
     print(dreL)
     nomeL = request.args.get('nome')
@@ -288,7 +288,7 @@ def leitura():
         from db import alocar
         from control import filaCe,filaCT,filaLe,Fila
 
-        alocar(cpfL,nomeL,dreL)
+        alocar(senhal,nomeL,dreL)
 
         user.chave = 'expirado'
         
@@ -298,7 +298,7 @@ def leitura():
 
         user.lugar = 'nada'
 
-        return render_template("lerQR.html", log=log, scpf=cpfL, sdre=dreL, snome=nomeL, skey=keyL)
+        return render_template("lerQR.html", log=log,)
     
     else:
         return render_template("badqr.html", log=log) #RETORNA QUE A CHAVE DE AUTH NÃO CONSTA
