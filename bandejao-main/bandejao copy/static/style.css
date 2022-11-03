@@ -42,7 +42,6 @@ code {
 }
 
 
-/* Appearance */
 .links {
 	background-color: #123;
 	background-image: linear-gradient(to bottom, #0003, transparent);
@@ -68,7 +67,6 @@ code {
 	pointer-events: none;
 }
 
-/* The Magic */
 #header {
 	position: fixed;
 	top: 0;
