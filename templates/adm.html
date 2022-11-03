@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./static/style.css" rel="stylesheet" type="text/css">
+    <title>Bandejão</title>
+</head>
+
+<body>
+    <div class="content">
+    <ul>
+    <h1>BEM-VINDO ADM</h1>
+    </ul>
+    <br>
+    <ul>
+    {% block content %}
+    {% endblock %}
+    </ul>
+    <br>
+    <ul>
+    <h2>Manipular fila:</h2>
+    <br><br>
+    <form method="POST" action="/adm">
+        <input type="radio" name="actionf" value="cti"><label>CT ++</label>
+        <input type="radio" name="actionf" value="cei"><label>Central ++</label>
+        <input type="radio" name="actionf" value="lei"><label>Letras ++</label>
+        <input type="radio" name="actionf" value="ctd"><label>CT --</label>
+        <input type="radio" name="actionf" value="ced"><label>Central --</label>
+        <input type="radio" name="actionf" value="led"><label>Letras --</label>
+        <ul><button>enter</button></ul>
+    </form>
+    <br>
+    <div>Fila CT:{{ ct }}<br>Fila Central:{{ ce }}<br>Fila Letras:{{ le }}</div>
+    </ul>
+
+    <br>
+    <ul>
+    <form>
+        <input type="button" value="Acessar histórico" onclick= "window.location.href = 'database' ">
+       </form>
+    </ul>
+    <ul>
+        <form>
+            <input type="button" value="Acessar Home" onclick= "window.location.href='/'">
+           </form>
+        </ul>
+    
+</body>
+
+</html>

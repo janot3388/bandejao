@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./static/style.css" rel="stylesheet" type="text/css">
+    <title>Bandejão</title>
+</head>
+
+<body>
+    <header id="header">
+        <nav class="links" style="--items: 5;">
+            {% if log %}
+            <a href="{{url_for('logout')}}">Sair</a>
+            <a href="{{url_for('profile')}}">Perfil</a>
+            {% else %}
+            <a href="{{url_for('sign_in')}}">Login</a>
+            <a href="{{url_for('sign_up')}}">Cadastre-se</a>
+            {% endif %}
+
+            <a href="{{url_for('home')}}">Home</a>
+            <a href="{{url_for('fila')}}">Fila</a>
+            <a href="{{url_for('cardapio')}}">Cardapio</a>
+            <span class="line"></span>
+        </nav>
+    </header>
+
+
+        <div class="content">
+            <ul>
+                <h1>SISTEMA BANDECO DE LOGISTICA</h1>
+            </ul>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+</html>

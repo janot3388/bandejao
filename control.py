@@ -23,7 +23,7 @@ class QRCodeOBJ:                     # Classe geradora do QRcode
     def qrmake(self):
         img = qrcode.make(self.qrdata)
         type(img)
-        img.save("bandejao-main/bandejao copy/static/QRc.png")
+        img.save("./static/QRc.png")
 
 
 

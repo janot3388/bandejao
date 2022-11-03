@@ -1,0 +1,17 @@
+{% extends "home.html" %}
+
+{% block content %}  
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div>
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %} 
+    <form id="page" method="POST" action="/sign_in">
+        <div>Entre com seu login e senha</div>
+        <input type="DRE" name="DRE" placeholder="DRE">
+        <input type="password" name="senha" placeholder="Senha">
+        <button>Login</button>
+    </form>
+{% endblock %}
