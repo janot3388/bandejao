@@ -99,6 +99,8 @@ def cardapio():
 def sign_in():
 
     from db import user
+
+
     log=s_in(user.dre, user.senha)
 
     #carrega o template de sign in
@@ -141,9 +143,18 @@ def logout():
 @app.route("/sign_in", methods=['POST'])
 def sign_in_post():
     
+
+    dre = (request.form.get('DRE'))
+    senha = (request.form.get('senha'))
+
+    #login especial
+    if dre == 'admin' and senha == 'admin':
+        return redirect("/adm")
+
     #a utilização do comand int() será explicada no banco de dados
-    dre = int (request.form.get('DRE'))
-    senha = int (request.form.get('senha'))
+    dre=int(dre)
+    senha=int(senha)
+
 
     #a função s_in retorna True caso os dados tenham correspondencia no banco de dados
     if s_in(dre, senha): 

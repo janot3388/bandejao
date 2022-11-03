@@ -108,7 +108,7 @@ def alocar(senha,nome,dre):
 
     db.commit()
 
-
+'''
 def admprint():
     db = sqlite3.connect('db.sqlite') 
     c = db.cursor()
@@ -117,7 +117,7 @@ def admprint():
     for row in c:
     
         print(row)
-
+'''
 
 def admshow(): #EXPORTA O HISTÓRICO DE ACESSOS AO BANDEJAO PARA EXIBIR NA PAGINA ADMINISTRATIVA
     conn = sqlite3.connect('db.sqlite')
