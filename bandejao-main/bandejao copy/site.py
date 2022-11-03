@@ -177,7 +177,7 @@ def gerar_qr():
     link.qrmake()
 
     #QUANDO QR CODE É GERADO, VAR CHAVE DO USUARIO É ATUALIZADA PARA AUTH FUTURA NA ENTRADA DO BANDEJAO
-    user.chave = QRCodeOBJ.chave 
+    user.chave = link.chave 
 
 
 
@@ -217,7 +217,9 @@ def leitura():
 
         return render_template("lerQR.html", log=log, scpf=cpfL, sdre=dreL, snome=nomeL, skey=keyL)
     
-    request.form.get
+    else:
+        return render_template("badqr.html")
+
 
 
 

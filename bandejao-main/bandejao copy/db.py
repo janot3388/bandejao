@@ -31,11 +31,13 @@ c = db.cursor()
 c.execute('''
           CREATE TABLE IF NOT EXISTS alunos
           ([nome] STRING, [dre] STRING PRIMARY KEY, [cpf] STRING UNIQUE);
-
-          CREATE TABLE IF NOT EXISTS alocados
-          ([nome] STRING, [dre] STRING PRIMARY KEY, [cpf] STRING UNIQUE, [tempo] TEXT))
-
           ''')
+
+c.execute('''
+          CREATE TABLE IF NOT EXISTS alocados
+          ([nome] STRING, [dre] STRING PRIMARY KEY, [cpf] STRING UNIQUE, [tempo] TEXT);
+          ''')
+
 
 db.commit()
 
@@ -99,7 +101,18 @@ def s_in(dre, cpf):
 def alocar(cpf,nome,dre):
     db = sqlite3.connect('db.sqlite') 
     c = db.cursor()
+    tempo = str(datetime.datetime.now())
 
-    c.execute("INSERT INTO alocados VALUES ('"+nome+"','"+dre+"','"+cpf+"','"+datetime('now','localtime')+"')")
+    c.execute("INSERT INTO alocados VALUES ('"+nome+"','"+dre+"','"+cpf+"','"+tempo+"')")
 
     db.commit()
+
+
+def admprint():
+    db = sqlite3.connect('db.sqlite') 
+    c = db.cursor()
+    c.execute("SELECT * FROM alocados")  
+
+    for row in c:
+    
+        print(row)
