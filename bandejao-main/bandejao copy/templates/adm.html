@@ -9,7 +9,28 @@
 </head>
 
 <body>
-    <div>BEM-VINDO ADM</div>
+    <h1>BEM-VINDO ADM</h1>
+    <br>
+    <h2>Manipular fila:</h2>
+
+    <form method="POST" action="/adm">
+        <input type="radio" name="actionf" value="cti"><label>CT ++</label>
+        <input type="radio" name="actionf" value="cei"><label>Central ++</label>
+        <input type="radio" name="actionf" value="lei"><label>Letras ++</label>
+        <input type="radio" name="actionf" value="ctd"><label>CT --</label>
+        <input type="radio" name="actionf" value="ced"><label>Central --</label>
+        <input type="radio" name="actionf" value="led"><label>Letras --</label>
+        <button>enter</button>
+    </form>
+    <br>
+    <div>Fila CT:{{ ct }}, Fila Central:{{ ce }}, Fila Letras:{{ le }}</div>
+
+    <br><br>
+    
+    <form>
+        <input type="button" value="Acessar histórico" onclick= "window.location.href = 'database' ">
+       </form>
+
     <div id="page">
         {% block content %}
         {% endblock %}

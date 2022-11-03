@@ -7,9 +7,7 @@ import qrcode, time, datetime
 
 
 
-########################## COMENTAR CASO TESTAR QRCODE DIRETO SEM USAR DB !!
-#from db import user      # Importa dados do usuario
-#nome=user.nome, cpf=user.cpf, dre=user.dre
+
 
 
 
@@ -33,11 +31,18 @@ class QRCodeOBJ:                     # Classe geradora do QRcode
 #p1.qrmake()
 
 
+
+filaCT = []
+filaCe = []
+filaLe = []
+
+
 class Fila:                       # Classe geradora da fila de espera
     def __init__(self):
         pass
 
-
+####### ANTIGA FUNÇÃO SUBSTITUENTE DA FILA FISICA POR UM TEMPORISADOR (OBSOLETA)
+'''
     def esperar(self,m):        # Contador que simula tempo de espera da fila
         segundos = m     # OBS: UMA HORA É REPRESENTADA POR UM SEGUNDO
  
@@ -56,6 +61,58 @@ class Fila:                       # Classe geradora da fila de espera
 
         filafim = True
         print("A fila acabou")
+'''
+    
+
+    def entra(self,dre,lugar): #FUNÇÃO QUE INSERE CLIENTE NA FILA
+
+        if lugar == 'ct':
+            filaCT.append(dre)
+        if lugar == 'ce':
+            filaCe.append(dre)
+        if lugar == 'le':
+            filaLe.append(dre)   
+    
+    def sai(self,lugar): #FUNÇÃO QUE REMOVE CLIENTE DA FILA
+
+        if lugar == 'ct':
+            filaCT.pop(0)
+        if lugar == 'ce':
+            filaCe.pop(0)
+        if lugar == 'le':
+            filaLe.pop(0)
+
+    def check(self,dre,lugar): #FUNÇÃO QUE RETONA SE É A VEZ DO CLIENTE PARA RECEBER O QRCODE
+
+        if lugar == 'ct':
+            if filaCT.index(dre) == 0:
+                return True
+
+        elif lugar == 'ce':
+            if filaCe.index(dre) == 0:
+                return True
+
+        elif lugar == 'le':
+            if filaLe.index(dre) == 0:
+                return True
+                
+        else:
+            return False
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
 
 ##### TESTE DA ESPERA
 #fila1 = Fila()

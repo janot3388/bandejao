@@ -1,0 +1,18 @@
+
+{% extends "adm.html" %}
+
+{% block content %}            
+    <div id="page">
+        
+        <h1>ACESSOS AO BENDEJÃO:</h1>
+
+        <table>
+            {% for row in rows %}
+            <tr>
+              <th> {{ row }}</th>
+            </tr> 
+            {% endfor %}
+        </table>
+        
+    </div>
+{% endblock %}

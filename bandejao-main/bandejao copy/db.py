@@ -10,6 +10,7 @@ class User():
         self.dre=dre
         self.cpf=cpf
         self.chave = "nada"      
+        self.lugar= "nada"
 
     #usado tanto para logar o usuario quanto para desloga-lo
     def logar(self, a, b, c):
@@ -35,7 +36,7 @@ c.execute('''
 
 c.execute('''
           CREATE TABLE IF NOT EXISTS alocados
-          ([nome] STRING, [dre] STRING PRIMARY KEY, [cpf] STRING UNIQUE, [tempo] TEXT);
+          ([nome] STRING, [dre] STRING , [cpf] STRING, [tempo] TEXT PRIMARY KEY);
           ''')
 
 
@@ -116,3 +117,11 @@ def admprint():
     for row in c:
     
         print(row)
+
+
+def admshow(): #EXPORTA O HISTÓRICO DE ACESSOS AO BANDEJAO PARA EXIBIR NA PAGINA ADMINISTRATIVA
+    conn = sqlite3.connect('db.sqlite')
+    c = conn.cursor()
+    c.execute('SELECT nome, dre, cpf, tempo FROM alocados')    
+    rows = c.fetchall()
+    return rows

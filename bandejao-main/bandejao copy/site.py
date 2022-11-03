@@ -1,3 +1,5 @@
+from ctypes.wintypes import LCTYPE
+from operator import and_
 from flask import render_template, request, redirect, url_for, flash, Flask
 from db import s_in, s_up
 
@@ -5,12 +7,53 @@ from db import s_in, s_up
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
 
+
             #RENDERIZACAO DAS PAGINAS
 
-#ainda a implementar
-@app.route("/adm")
+
+
+# PAGINA DE ADMINISTRADOR E DEV
+@app.route("/adm", methods=['POST','GET'])
 def adm():
-    return render_template("adm.html")
+    from control import Fila, filaCT, filaCe, filaLe
+
+    admin = Fila()
+    acao = request.form.get('actionf') 
+
+    print(filaCT),print(filaCe),print(filaLe)
+
+    dre = "admin"
+    lct = "ct"
+    lce = "ce"
+    lle = "le"
+
+    print(acao) #INSERÇÃO MANUAL DE CLIENTES NAS FILAS
+
+    if acao == 'cti':
+        admin.entra(dre,lct)
+    elif acao == 'ctd':
+        admin.sai(lct)
+    elif acao == 'cei':
+        admin.entra(dre,lce)
+    elif acao == 'ced':
+        admin.sai(lce)
+    elif acao == 'lei':
+        admin.entra(dre,lle)
+    elif acao == 'led':
+        admin.sai(lle)
+
+
+
+    return render_template("adm.html", ct=len(filaCT),ce=len(filaCe),le=len(filaLe))
+
+#SEÇÃO QUE MOSTRA HISTÓRICO DE ACESSOS AO BENDEJAO
+@app.route("/database")
+def show():
+    from db import admshow
+    rows = admshow()
+    print (rows)
+    return render_template('database.html', rows=rows)
+
 
 #rota padrão
 @app.route("/")
@@ -19,6 +62,7 @@ def home():
     #todas as rotas de renderização possuem essa verificacao caso alguem esteja logado
     from db import user
     log=s_in(user.dre, user.cpf)
+
 
     #carrega o template de home
     return render_template("home.html", log=log)
@@ -34,6 +78,8 @@ def fila():
 
     #carrega o template de fila
     return render_template("fila.html", ct="55", central="75", letras="45", log=log)
+
+
 
 #visualizar o cardapio do dia
 @app.route("/cardapio")
@@ -137,7 +183,6 @@ def entar_fila():
     global lugar
     
     lugar = (request.form.get('place'))
-    int(lugar)
 
     #print (lugar)
     return redirect("/aguardando")
@@ -152,17 +197,47 @@ def switch():
 
     return render_template("aguardando.html",log=log)
 
-#inicia a função de espera
+#ENTRA NA FILA
+
 @app.route("/aguardo")
 def aguardar(): 
 
+    from db import user
     from control import Fila
+    global wait
     wait = Fila()
-    wait.esperar(int(lugar))
-    print("$$$$$$$$$$$$")
+    
+    user.lugar = lugar
+    
+    #wait.esperar(int(lugar))
+    #print("$$$$$$$$$$$$")
+   
+    wait.entra(user.dre,user.lugar)
+    return redirect("/aguardo2")
+
+#SEGUNDA ABA PARA ESTADO DE LOOP ENQUANTO O CLIENTE NÃO ESTIVER NA SUA VEZ DA FILA
+@app.route("/aguardo2")
+def aguardar2():
+    from db import user
+    from control import Fila
+    import time
+    
+    #CHECA SE POSIÇÃO É A PRIMEIRA
+    Check = wait.check(user.dre,user.lugar)
+    print(Check)
+
+    #LOOP QUE ESPERA A VEZ
+    while True:
+        if Check == True:
+            break
+        else:
+            time.sleep(2)
+            return redirect("/aguardo2")
+
+    return redirect("/qrcode") 
+    
 
 
-    return redirect("/qrcode")
 
 #renderiza a aba de geração do QRcode + função que gera o mesmo
 @app.route("/qrcode")
@@ -184,7 +259,8 @@ def gerar_qr():
     return render_template("qrcode.html", log=log)
 
 
-################################
+
+# ROTA DE LEITURA DO QR CODE
 
 @app.route("/lerQR")
 def leitura():
@@ -193,7 +269,7 @@ def leitura():
     from flask import request
     log=s_in(user.dre, user.cpf)
     
-
+#RECEBE VALORES DOS PARAMETROS DO LINK PERTENCENTE AO QRCODE
     cpfL= request.args.get('cpf')
     print(cpfL)
     dreL= request.args.get('dre')
@@ -205,23 +281,27 @@ def leitura():
 
 
 
-# DAQUI PRA BAIXO É SÓ PUTARIA QUE TALVEZ SIRVA DEPOIS
-    if keyL == user.chave:
+# VALIDAÇÃO DO CLIENTE NO BANDEJAO, E ALOCAÇÃO DO MESMO NO HISTÓRICO DE ACESSOS
+
+    if keyL == user.chave: #VALIDA AUTENTICIDADE DA CHAVE TEMPORARIA DO CLIENTE
         
         from db import alocar
+        from control import filaCe,filaCT,filaLe,Fila
 
         alocar(cpfL,nomeL,dreL)
 
         user.chave = 'expirado'
+        
+        delete = Fila()
+        
+        delete.sai(user.lugar)
 
+        user.lugar = 'nada'
 
         return render_template("lerQR.html", log=log, scpf=cpfL, sdre=dreL, snome=nomeL, skey=keyL)
     
     else:
-        return render_template("badqr.html")
-
-
-
+        return render_template("badqr.html", log=log) #RETORNA QUE A CHAVE DE AUTH NÃO CONSTA
 
 
 
